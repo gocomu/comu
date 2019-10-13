@@ -1,1 +1,1 @@
-# gocomu lib
+# comu lib
