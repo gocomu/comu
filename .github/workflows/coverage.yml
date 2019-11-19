@@ -1,5 +1,7 @@
 name: coverage
 
+on: push
+
 jobs:
   build:
     name: Test and upload to Codecov
