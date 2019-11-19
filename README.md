@@ -13,7 +13,7 @@ The roadmap to v0.1.0 includes:
     - [ ] renderer
     - [ ] recorder
  - [ ] IO wrappers
-    - [*] OSC
+    - [x] OSC
     - [ ] Audio
     - [ ] Midi
 - [ ] Pan implementation (support for 2-4-8-n channels)
