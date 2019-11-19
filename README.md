@@ -12,7 +12,7 @@ The roadmap to v0.1.0 includes:
  - [ ] Finalize TempoClock
  - [ ] Pattern system design
  - [ ] Utilities implementation
-    - [ ] embeder
+    - [ ] embedder
     - [ ] renderer
     - [ ] recorder
  - [ ] IO wrappers
