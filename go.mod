@@ -8,5 +8,8 @@ require (
 	github.com/go-audio/transforms v0.0.0-20180121090939-51830ccc35a5
 	github.com/go-audio/wav v1.0.0
 	github.com/gordonklaus/portaudio v0.0.0-20180817120803-00e7307ccd93
+	github.com/hypebeast/go-osc v0.0.0-20181130121958-adefe22206c1
+	github.com/leaanthony/mewn v0.10.7
+	github.com/micro/go-micro v1.16.0
 	github.com/mjibson/go-dsp v0.0.0-20180508042940-11479a337f12
 )
