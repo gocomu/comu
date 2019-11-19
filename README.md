@@ -9,7 +9,7 @@ Comu uses go-audio at its core and port-audio to make sound.
 At the moment we are at the early stages with few things working.
 
 The roadmap to v0.1.0 includes:
- - [ ] Finilising TempoClock
+ - [ ] Finalize TempoClock
  - [ ] Pattern system design
  - [ ] Utilities implementation
     - [ ] embeder
