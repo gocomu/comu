@@ -1,0 +1,21 @@
+name: coverage
+
+jobs:
+  build:
+    name: Test and upload to Codecov
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up Go 1.13
+      uses: actions/setup-go@master
+      with:
+        go-version: 1.13
+      id: go
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@master
+
+    - name: Run tests
+      run: go test -race -coverprofile=coverage.txt -covermode=atomic
+
+    - name: Upload results to Codecov
+      run: bash <(curl -s https://codecov.io/bash) -t ${{secrets.CODECOV_TOKEN}}
