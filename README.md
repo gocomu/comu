@@ -4,7 +4,7 @@
  
 comu (computer music) is an open source library, aiming to assists electronic music composition using Go.
 
-Comu uses go-audio at its core and port-audio to make sound. 
+comu uses [go-audio](https://github.com/go-audio) at its core and port-audio to produce sound. 
 
 At the moment we are at the early stages with few things working.
 
@@ -20,8 +20,9 @@ The roadmap to v0.1.0 includes:
     - [ ] Audio
     - [ ] Midi
 - [ ] Pan implementation (support for 2-4-8-n channels)
-- [ ] CLi helper https://github.com/gocomu/cli
-- [ ] Oto port (as alternative to port-audio)
+- [ ] CLI helper https://github.com/gocomu/cli
+- [ ] port Oto (as alternative to port-audio)
+- [ ] RTaudio?
 
 # installation
 
