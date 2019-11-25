@@ -26,7 +26,7 @@ func (p *Pattern) Four2TheFloor(pattern []int) {
 			currentNote = currentNote + 20.0
 			if p.clock.BeatCounter == 4 {
 				//fmt.Println("tempo change")
-				p.clock.BPMchange <- 440
+				p.clock.BPMchange <- 120.0
 			}
 			//log.Println(tempo.BarCounter)
 			//tempo.BPMchange <- newTempo

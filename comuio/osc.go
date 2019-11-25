@@ -9,7 +9,7 @@ import (
 
 // OSCio holds OSC server/client connections
 // OSCio is a thin wrapper around 'github.com/hypebeast/go-osc'
-// providing an even more simplified & integrated usage for gocomu users
+// providing an even more simplified & integrated osc usage for gocomu users
 type OSCio struct {
 	Server *osc.Server
 	client *osc.Client

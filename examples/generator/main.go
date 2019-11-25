@@ -11,11 +11,10 @@ import (
 
 	"github.com/go-audio/audio"
 	"github.com/go-audio/generator"
+	"github.com/go-audio/transforms"
 	"github.com/gocomu/comu"
 	"github.com/gocomu/comu/comuio"
 	"github.com/gocomu/comu/pattern"
-	"github.com/gordonklaus/portaudio"
-	"github.com/hypebeast/go-osc/osc"
 )
 
 var (
@@ -25,19 +24,6 @@ var (
 )
 
 func main() {
-	//comu.fftt()
-	//comu.encode()
-	//comu.R()
-	oscio := comuio.NewOSCio("8765", "localhost", "8765")
-	oscio.Server.Handle("/message/address", func(msg *osc.Message) {
-		osc.PrintMessage(msg)
-	})
-	//TODO: clock auto receivers
-
-	oscio.Message("/message/address", int32(666), true, "Hello")
-	//TODO: bundle messages
-	//TODO: clock auto messages
-
 	bufferSize := 512
 	buf := &audio.FloatBuffer{
 		Data:   make([]float64, bufferSize),
@@ -48,9 +34,6 @@ func main() {
 
 	sig := make(chan os.Signal, 1)
 	signal.Notify(sig, os.Interrupt, os.Kill)
-
-	//gainControl := 0.0
-	//currentVol := osc.Amplitude
 
 	tempo := comu.NewClock(120.0)
 	sine := pattern.NewPattern(tempo, osc)
@@ -63,19 +46,8 @@ func main() {
 	// }()
 
 	// Audio output
-	portaudio.Initialize()
-	defer portaudio.Terminate()
-	out := make([]float32, bufferSize)
-	stream, err := portaudio.OpenDefaultStream(0, 1, 44100, len(out), &out)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer stream.Close()
-
-	if err := stream.Start(); err != nil {
-		log.Fatal(err)
-	}
-	defer stream.Stop()
+	to := make(chan *audio.FloatBuffer, 1)
+	go comuio.PortAudio(to, bufferSize)
 
 	for {
 
@@ -86,26 +58,14 @@ func main() {
 		// apply vol control if needed (applied as a transform instead of a control
 		// on the osc)
 		//transforms.Gain(buf, 1)
+		transforms.StereoPan(buf, 0.5)
 
-		f64ToF32Copy(out, buf.Data)
-
-		// write to the stream
-		if err := stream.Write(); err != nil {
-			log.Printf("error writing to stream : %v\n", err)
-		}
+		to <- buf
 		select {
 		case <-sig:
-			fmt.Println("\tCiao!")
+			fmt.Println("\tExiting..")
 			return
 		default:
 		}
-	}
-}
-
-// portaudio doesn't support float64 so we need to copy our data over to the
-// destination buffer.
-func f64ToF32Copy(dst []float32, src []float64) {
-	for i := range src {
-		dst[i] = float32(src[i])
 	}
 }

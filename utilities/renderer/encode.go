@@ -1,4 +1,4 @@
-package comu
+package renderer
 
 import (
 	"fmt"

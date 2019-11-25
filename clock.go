@@ -34,21 +34,16 @@ type TempoClock struct {
 
 // NewClock returns a new TempoClock struct
 func NewClock(initBPM float64) *TempoClock {
-	// convert BPM to milliseconds
-	beatInMS := 60000 / initBPM
-	// intiate a new tickers
-	timer := time.NewTicker(time.Duration(beatInMS) * time.Millisecond)
-	// make a buffered channel for BPMchange
-	tempoChangeCh := make(chan float64, 1)
 	tempo := &TempoClock{
-		BPM:            initBPM,
-		BPMchange:      tempoChangeCh,
-		Beat:           timer,
+		BPM:       60000 / initBPM,
+		BPMchange: make(chan float64, 1),
+		Beat:      time.NewTicker(time.Duration(60000/initBPM) * time.Millisecond),
+		// default time signature is 4/4
 		TimeSignature:  []int{4, 4},
-		MStilNetxtBeat: beatInMS,
+		MStilNetxtBeat: 60000 / initBPM,
 	}
 	// start the clock
-	go tempo.clock()
+	tempo.clock()
 
 	return tempo
 }
@@ -60,22 +55,28 @@ func (t *TempoClock) NewBPM(newTempo float64) {
 
 func (t *TempoClock) clock() {
 	t.TimeStarted = time.Now()
-	for {
-		select {
-		// on each new beat update BeatCounter and BarCounter
-		case <-t.Beat.C:
+	go func() {
+		for {
+			// on each new beat update BeatCounter and BarCounter
+			<-t.Beat.C
 			t.BeatCounter++
 			go t.barCounterUpdate()
-		// when BPMchange channels receives a value a new ticker is set
-		// along with new BPM and MStilNetxtBeat
-		case newTempo := <-t.BPMchange:
+		}
+	}()
+
+	go func() {
+		for {
+			// when BPMchange channels receives a value a new ticker is set
+			// along with new BPM and MStilNetxtBeat
+			newTempo := <-t.BPMchange
+			t.Beat.Stop()
 			beatInMS := 60000 / newTempo
-			newtimer := time.NewTicker(time.Duration(beatInMS) * time.Millisecond)
-			t.Beat = newtimer
+			t.Beat = time.NewTicker(time.Duration(beatInMS) * time.Millisecond)
 			t.BPM = newTempo
 			t.MStilNetxtBeat = beatInMS
 		}
-	}
+	}()
+
 }
 
 func (t *TempoClock) barCounterUpdate() {
