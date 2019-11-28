@@ -4,9 +4,7 @@
 
 # comu
  
-comu (computer music) is an open source library, aiming to assists electronic music creation using Go.
-
-comu uses [go-audio](https://github.com/go-audio).
+comu (computer music) is an open source library, aiming to assist electronic music creation using Go.
 
 At the moment we are at the early stages with few things working.
 
@@ -22,6 +20,8 @@ The roadmap to v0.1.0 includes:
     - [x] OpenSoundControl
     - [X] Audio
     - [ ] Midi
+- [ ] README
+- [ [ wiki
 - [ ] Pan implementation (support for 2-4-8-n channels)
 - [ ] CLI helper https://github.com/gocomu/cli
 - [ ] wrapper around Oto (as alternative to port-audio)
