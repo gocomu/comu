@@ -4,7 +4,7 @@
 
 # comu
  
-comu (computer music) is an open source library, aiming to assist electronic music creation using Go.
+comu (computer music) is an open source music library for creative coding in Go.
 
 At the moment we are at the early stages with few things working.
 
