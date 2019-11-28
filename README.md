@@ -24,7 +24,7 @@ The roadmap to v0.1.0 includes:
     - [ ] Midi
 - [ ] Pan implementation (support for 2-4-8-n channels)
 - [ ] CLI helper https://github.com/gocomu/cli
-- [ ] port Oto (as alternative to port-audio)
+- [ ] wrapper around Oto (as alternative to port-audio)
 - [ ] RTaudio?
 
 # installation
