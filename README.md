@@ -11,15 +11,15 @@ comu uses [go-audio](https://github.com/go-audio) at its core and port-audio to 
 At the moment we are at the early stages with few things working.
 
 The roadmap to v0.1.0 includes:
- - [ ] Finalize TempoClock
+ - [x] TempoClock
  - [ ] Pattern system design
  - [ ] Utilities implementation
     - [ ] embedder
     - [ ] renderer
     - [ ] recorder
  - [ ] IO wrappers
-    - [x] OSC
-    - [ ] Audio
+    - [x] OpenSoundControl
+    - [X] Audio
     - [ ] Midi
 - [ ] Pan implementation (support for 2-4-8-n channels)
 - [ ] CLI helper https://github.com/gocomu/cli
