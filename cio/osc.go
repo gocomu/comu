@@ -1,4 +1,4 @@
-package comuio
+package cio
 
 import (
 	"fmt"
@@ -54,7 +54,6 @@ func (o *OSCio) Message(messageAddress string, data ...interface{}) {
 func stringToInt(s string) int {
 	i, err := strconv.Atoi(s)
 	if err != nil {
-		// handle error
 		fmt.Println(err)
 	}
 	return i

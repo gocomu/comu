@@ -6,7 +6,7 @@ import (
 	"flag"
 	"time"
 
-	"github.com/gocomu/comu/comuio"
+	"github.com/gocomu/comu/cio"
 	"github.com/hypebeast/go-osc/osc"
 )
 
@@ -18,7 +18,7 @@ var (
 
 func main() {
 	// start a new osc server and client
-	oscio := comuio.NewOSCio("8765", "localhost", "8765")
+	oscio := cio.NewOSCio("8765", "localhost", "8765")
 	// init a handle
 	oscio.Server.Handle("/message/address", func(msg *osc.Message) {
 		osc.PrintMessage(msg)

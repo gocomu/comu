@@ -1,4 +1,4 @@
-package comuio
+package cio
 
 import (
 	"log"
@@ -14,28 +14,32 @@ const (
 	Oto
 )
 
-type Comuio struct {
-	Audio *audio.FloatBuffer
+type AIO struct {
+	Audio   chan *audio.FloatBuffer
+	Trigger chan bool
 }
 
-func NewOutput(audioOutput out, numberOfChannels, bufferSize int) chan *audio.FloatBuffer {
-	channel := make(chan *audio.FloatBuffer, 1)
-
+//func NewOutput(audioOutput out, numberOfChannels, bufferSize int) chan *audio.FloatBuffer {
+func NewOutput(audioOutput out, numberOfChannels, bufferSize int) *AIO {
+	aio := &AIO{
+		Audio: make(chan *audio.FloatBuffer),
+	}
 	switch audioOutput {
 	case PortAudio:
-		go portAudio(channel, bufferSize)
+		go aio.portAudio(numberOfChannels, bufferSize)
 
 	case Oto:
+		// go aio.oto(numberOfChannels, bufferSize)
 	}
 
-	return channel
+	return aio
 }
 
-func portAudio(bufchan chan *audio.FloatBuffer, bufferSize int) {
+func (aio *AIO) portAudio(numberOfChannels, bufferSize int) {
 	portaudio.Initialize()
 	defer portaudio.Terminate()
 	out := make([]float32, bufferSize)
-	stream, err := portaudio.OpenDefaultStream(0, 1, 44100, len(out), &out)
+	stream, err := portaudio.OpenDefaultStream(0, numberOfChannels, 44100, len(out), &out)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -44,10 +48,9 @@ func portAudio(bufchan chan *audio.FloatBuffer, bufferSize int) {
 	if err := stream.Start(); err != nil {
 		log.Fatal(err)
 	}
-	defer stream.Stop()
 
 	for {
-		buf := <-bufchan
+		buf := <-aio.Audio
 		f64ToF32Copy(out, buf.Data)
 		// write to the stream
 		if err := stream.Write(); err != nil {

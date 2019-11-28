@@ -69,7 +69,6 @@ func (t *TempoClock) clock() {
 			// when BPMchange channels receives a value a new ticker is set
 			// along with new BPM and MStilNetxtBeat
 			newTempo := <-t.BPMchange
-			t.Beat.Stop()
 			beatInMS := 60000 / newTempo
 			t.Beat = time.NewTicker(time.Duration(beatInMS) * time.Millisecond)
 			t.BPM = newTempo

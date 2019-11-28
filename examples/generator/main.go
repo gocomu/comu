@@ -10,13 +10,13 @@ import (
 	"github.com/go-audio/generator"
 	"github.com/go-audio/transforms"
 	"github.com/gocomu/comu"
-	"github.com/gocomu/comu/comuio"
+	"github.com/gocomu/comu/cio"
 	"github.com/gocomu/comu/pattern"
 )
 
 var (
 	sampleRate      = flag.Int("samplerate", 44100, "sample rate")
-	channelNum      = flag.Int("channelnum", 2, "number of channel")
+	channelNum      = flag.Int("channelnum", 1, "number of channel")
 	bitDepthInBytes = flag.Int("bitdepthinbytes", 2, "bit depth in bytes")
 )
 
@@ -29,7 +29,7 @@ func main() {
 	osc := generator.NewOsc(generator.WaveSine, 440.0, buf.Format.SampleRate)
 	osc.Amplitude = 0.5
 
-	tempo := comu.NewClock(120.0)
+	tempo := comu.NewClock(240.0)
 	sine := pattern.NewPattern(tempo, osc)
 	go sine.Four2TheFloor([]int{1, 0, 1, 0, 1, 0})
 
@@ -43,7 +43,7 @@ func main() {
 	// arg1 int: portAudio, oto
 	// arg2 int: number of channels
 	// arg3 int: buffersize
-	outChannels := comuio.NewOutput(comuio.PortAudio, 2, bufferSize)
+	outChannels := cio.NewOutput(cio.PortAudio, *channelNum, bufferSize)
 
 	for {
 
@@ -54,8 +54,8 @@ func main() {
 		// apply vol control if needed (applied as a transform instead of a control
 		// on the osc)
 		//transforms.Gain(buf, 1)
-		transforms.StereoPan(buf, 0.5)
+		transforms.StereoPan(buf, 0.0)
 
-		outChannels <- buf
+		outChannels.Audio <- buf
 	}
 }
