@@ -12,6 +12,7 @@ At the moment we are at the early stages with few things working.
 
 The roadmap to v0.1.0 includes:
  - [x] TempoClock
+ - [ ] Time functions
  - [ ] Pattern system design
  - [ ] Utilities implementation
     - [ ] embedder
