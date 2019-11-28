@@ -6,7 +6,7 @@
  
 comu (computer music) is an open source library, aiming to assists electronic music composition using Go.
 
-comu uses [go-audio](https://github.com/go-audio) at its core and port-audio to produce sound. 
+comu uses [go-audio](https://github.com/go-audio).
 
 At the moment we are at the early stages with few things working.
 
@@ -38,3 +38,6 @@ go get github.com/gocomu/comu
 
 # usage
 
+## examples
+
+`go run ./examples/generator`
