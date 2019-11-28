@@ -24,9 +24,9 @@ func (p *Pattern) Four2TheFloor(pattern []int) {
 		case <-p.clock.Beat.C:
 			p.osc.SetFreq(currentNote)
 			currentNote = currentNote + 20.0
-			if p.clock.BeatCounter == 4 {
+			if p.clock.BeatCounter == 8 {
 				//fmt.Println("tempo change")
-				p.clock.BPMchange <- 120.0
+				p.clock.BPMchange <- 240.0
 			}
 			//log.Println(tempo.BarCounter)
 			//tempo.BPMchange <- newTempo

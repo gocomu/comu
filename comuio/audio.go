@@ -7,7 +7,31 @@ import (
 	"github.com/gordonklaus/portaudio"
 )
 
-func PortAudio(bufchan chan *audio.FloatBuffer, bufferSize int) {
+type out int
+
+const (
+	PortAudio = out(iota)
+	Oto
+)
+
+type Comuio struct {
+	Audio *audio.FloatBuffer
+}
+
+func NewOutput(audioOutput out, numberOfChannels, bufferSize int) chan *audio.FloatBuffer {
+	channel := make(chan *audio.FloatBuffer, 1)
+
+	switch audioOutput {
+	case PortAudio:
+		go portAudio(channel, bufferSize)
+
+	case Oto:
+	}
+
+	return channel
+}
+
+func portAudio(bufchan chan *audio.FloatBuffer, bufferSize int) {
 	portaudio.Initialize()
 	defer portaudio.Terminate()
 	out := make([]float32, bufferSize)

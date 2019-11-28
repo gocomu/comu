@@ -18,14 +18,4 @@ func main() {
 	comu.fftt()
 	comu.encode()
 	comu.R()
-	// oscio := comuio.NewOSCio("8765", "localhost", "8765")
-	// oscio.Server.Handle("/message/address", func(msg *osc.Message) {
-	// 	osc.PrintMessage(msg)
-	// })
-	//TODO: clock auto receivers
-
-	// oscio.Message("/message/address", int32(666), true, "Hello")
-	//TODO: bundle messages
-	//TODO: clock auto messages
-
 }

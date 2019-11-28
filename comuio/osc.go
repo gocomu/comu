@@ -7,6 +7,10 @@ import (
 	"github.com/hypebeast/go-osc/osc"
 )
 
+//TODO: clock auto receivers
+//TODO: bundle messages
+//TODO: clock auto messages
+
 // OSCio holds OSC server/client connections
 // OSCio is a thin wrapper around 'github.com/hypebeast/go-osc'
 // providing an even more simplified & integrated osc usage for gocomu users

@@ -4,10 +4,7 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
-	"os"
-	"os/signal"
 
 	"github.com/go-audio/audio"
 	"github.com/go-audio/generator"
@@ -32,9 +29,6 @@ func main() {
 	osc := generator.NewOsc(generator.WaveSine, 440.0, buf.Format.SampleRate)
 	osc.Amplitude = 0.5
 
-	sig := make(chan os.Signal, 1)
-	signal.Notify(sig, os.Interrupt, os.Kill)
-
 	tempo := comu.NewClock(120.0)
 	sine := pattern.NewPattern(tempo, osc)
 	go sine.Four2TheFloor([]int{1, 0, 1, 0, 1, 0})
@@ -46,8 +40,10 @@ func main() {
 	// }()
 
 	// Audio output
-	to := make(chan *audio.FloatBuffer, 1)
-	go comuio.PortAudio(to, bufferSize)
+	// arg1 int: portAudio, oto
+	// arg2 int: number of channels
+	// arg3 int: buffersize
+	outChannels := comuio.NewOutput(comuio.PortAudio, 2, bufferSize)
 
 	for {
 
@@ -60,12 +56,6 @@ func main() {
 		//transforms.Gain(buf, 1)
 		transforms.StereoPan(buf, 0.5)
 
-		to <- buf
-		select {
-		case <-sig:
-			fmt.Println("\tExiting..")
-			return
-		default:
-		}
+		outChannels <- buf
 	}
 }
