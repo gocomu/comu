@@ -7,6 +7,19 @@ import (
 	"github.com/gordonklaus/portaudio"
 )
 
+type bufferSize int
+
+const (
+	BS64 bufferSize = 64 << iota
+	BS128
+	BS256
+	BS512
+	BS1024
+	BS2048
+	BS4096
+	BS8192
+)
+
 type out int
 
 const (
@@ -55,7 +68,7 @@ func (aio *AudioIO) portAudio() {
 	}
 }
 
-func (aio *AudioIO) PortAudioOut(out []float32, buf *audio.FloatBuffer) {
+func (aio *AudioIO) PortAudioOut(buf *audio.FloatBuffer) {
 	// portaudio doesn't support float64 so we need to copy our data over to the
 	// destination buffer.
 	for i := range buf.Data {

@@ -3,55 +3,60 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/go-audio/audio"
 	"github.com/go-audio/generator"
+	"github.com/go-audio/transforms"
 	"github.com/gocomu/comu"
 	"github.com/gocomu/comu/cio"
 )
 
 func main() {
-	bufferSize := 512
+	// Audio output
+	// arg1 cio.out: PortAudio, Oto
+	// arg2 int: number of channels
+	// arg3 int: buffer size
+	comuIO := cio.NewAudioIO(cio.PortAudio, 2, int(cio.BS2048))
+
 	buf := &audio.FloatBuffer{
-		Data:   make([]float64, bufferSize),
+		Data:   make([]float64, cio.BS2048),
 		Format: audio.FormatStereo44100,
 	}
 
 	osc := generator.NewOsc(generator.WaveSine, 440.0, buf.Format.SampleRate)
 	osc.Amplitude = 0.5
 
-	tempo := comu.NewClock(240.0)
+	tempo := comu.NewClock(120.0)
 	sine := comu.NewPattern(tempo, osc)
 	go sine.Four2TheFloor([]int{1, 0, 1, 0, 1, 0})
 
-	// go func() {
-	// 	fmt.Println("tempo change")
-	// 	time.Sleep(10 * time.Second)
-	// 	tempo.NewBPM(float64(rand.Intn(250)))
+	go func() {
+		//time.Sleep(5 * time.Second)
+		//tempo.NewBPM(120)
+		//tempo.BPMchange <- 120.0
+		for {
+			<-tempo.Beat.C
+			if tempo.BeatCounter == 4 {
+				fmt.Println("beat nu. 8")
+				// tempo.BPMchange <- 240.0
+				tempo.BPMchange <- 240.0
+			}
+		}
+	}()
 
-	// if p.clock.BeatCounter == 8 {
-	// 	//fmt.Println("tempo change")
-	// 	p.clock.BPMchange <- 120.0
-	// }
-	// }()
-
-	// Audio output
-	// arg1 cio.out: PortAudio, Oto
-	// arg2 int: number of channels
-	// arg3 int: buffer size
-	comuIO := cio.NewAudioIO(cio.PortAudio, 2, bufferSize)
 	for {
 		// populate the out buffer
 		if err := osc.Fill(buf); err != nil {
 			log.Printf("error filling up the buffer")
 		}
 
-		//transforms.StereoPan(buf, 0.0)
+		transforms.StereoPan(buf, 0.0)
 		//transforms.Gain(buf, 1)
 
 		// pass populated buffer to port-audio stream
-		comuIO.PortAudioOut(comuIO.Out, buf)
+		comuIO.PortAudioOut(buf)
 	}
 
 }

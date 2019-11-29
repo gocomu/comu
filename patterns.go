@@ -26,7 +26,8 @@ func (p *Pattern) Four2TheFloor(pattern []int) {
 			//p.osc.SetFreq(currentNote)
 			p.osc.SetFreq(float64(rand.Intn(1500)))
 			currentNote = currentNote + 20.0
-			//log.Println(tempo.BarCounter)
+			// log.Println(tempo.BarCounter)
+			// log.Println(time.Now())
 			//tempo.BPMchange <- newTempo
 			//newTempo = newTempo + 10.0
 			//fmt.Println("received message ", newTempo)

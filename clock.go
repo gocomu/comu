@@ -16,7 +16,7 @@ type TempoClock struct {
 	// Beat is comu's universal clock ticker
 	Beat *time.Ticker
 
-	// BeatCounter counts how many beats have been played since the library started
+	// BeatCounter counts how many beats have been played since the program started
 	BeatCounter int64
 
 	// TimeSignature is optional and holds the time signature of the piece
@@ -35,12 +35,12 @@ type TempoClock struct {
 // NewClock returns a new TempoClock struct
 func NewClock(initBPM float64) *TempoClock {
 	tempo := &TempoClock{
-		BPM:       60000 / initBPM,
+		BPM:       (60000 / initBPM) * 0.5,
 		BPMchange: make(chan float64, 1),
-		Beat:      time.NewTicker(time.Duration(60000/initBPM) * time.Millisecond),
+		Beat:      time.NewTicker(time.Duration((60000/initBPM)*0.5) * time.Millisecond),
 		// default time signature is 4/4
 		TimeSignature:  []int{4, 4},
-		MStilNetxtBeat: 60000 / initBPM,
+		MStilNetxtBeat: (60000 / initBPM) * 0.5,
 	}
 	// start the clock
 	tempo.clock()
@@ -60,7 +60,7 @@ func (t *TempoClock) clock() {
 			// on each new beat update BeatCounter and BarCounter
 			<-t.Beat.C
 			t.BeatCounter++
-			go t.barCounterUpdate()
+			t.barCounterUpdate()
 		}
 	}()
 
@@ -69,7 +69,7 @@ func (t *TempoClock) clock() {
 			// when BPMchange channels receives a value a new ticker is set
 			// along with new BPM and MStilNetxtBeat
 			newTempo := <-t.BPMchange
-			beatInMS := 60000 / newTempo
+			beatInMS := (60000 / newTempo) * 0.5
 			t.Beat = time.NewTicker(time.Duration(beatInMS) * time.Millisecond)
 			t.BPM = newTempo
 			t.MStilNetxtBeat = beatInMS
