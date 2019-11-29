@@ -15,23 +15,23 @@ const (
 )
 
 type AudioIO struct {
-	BufChan          chan *audio.FloatBuffer
+	//BufChan          chan *audio.FloatBuffer
 	numberOfChannels int
 	bufferSize       int
 	stream           *portaudio.Stream
-	//Out              []float32
+	Out              []float32
 }
 
-func NewAudioIO(audioOutput out, numberOfChannels, bufferSize int, out []float32) *AudioIO {
+func NewAudioIO(audioOutput out, numberOfChannels, bufferSize int) *AudioIO {
 	aio := &AudioIO{
-		BufChan:          make(chan *audio.FloatBuffer),
+		//BufChan:          make(chan *audio.FloatBuffer),
 		numberOfChannels: numberOfChannels,
 		bufferSize:       bufferSize,
-		//Out:              make([]float32, bufferSize),
+		Out:              make([]float32, bufferSize),
 	}
 	switch audioOutput {
 	case PortAudio:
-		aio.portAudio(out)
+		aio.portAudio()
 
 	case Oto:
 		// go aio.oto()
@@ -40,12 +40,10 @@ func NewAudioIO(audioOutput out, numberOfChannels, bufferSize int, out []float32
 	return aio
 }
 
-func (aio *AudioIO) portAudio(out []float32) {
+func (aio *AudioIO) portAudio() {
 	portaudio.Initialize()
 	//defer portaudio.Terminate()
-	//out := make([]float32, aio.bufferSize)
-	// stream, err := portaudio.OpenDefaultStream(0, aio.numberOfChannels, 44100, len(aio.Out), &aio.Out)
-	stream, err := portaudio.OpenDefaultStream(0, aio.numberOfChannels, 44100, len(out), &out)
+	stream, err := portaudio.OpenDefaultStream(0, aio.numberOfChannels, 44100, len(aio.Out), &aio.Out)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -57,11 +55,11 @@ func (aio *AudioIO) portAudio(out []float32) {
 	}
 }
 
-func (aio *AudioIO) PortAudioFunc(out []float32, buf *audio.FloatBuffer) {
+func (aio *AudioIO) PortAudioOut(out []float32, buf *audio.FloatBuffer) {
 	// portaudio doesn't support float64 so we need to copy our data over to the
 	// destination buffer.
 	for i := range buf.Data {
-		out[i] = float32(buf.Data[i])
+		aio.Out[i] = float32(buf.Data[i])
 	}
 
 	// write to the stream

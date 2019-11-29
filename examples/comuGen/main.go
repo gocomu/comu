@@ -17,7 +17,6 @@ func main() {
 		Data:   make([]float64, bufferSize),
 		Format: audio.FormatStereo44100,
 	}
-	out := make([]float32, bufferSize)
 
 	osc := generator.NewOsc(generator.WaveSine, 440.0, buf.Format.SampleRate)
 	osc.Amplitude = 0.5
@@ -41,17 +40,18 @@ func main() {
 	// arg1 cio.out: PortAudio, Oto
 	// arg2 int: number of channels
 	// arg3 int: buffer size
-	comuIO := cio.NewAudioIO(cio.PortAudio, 2, bufferSize, out)
+	comuIO := cio.NewAudioIO(cio.PortAudio, 2, bufferSize)
 	for {
 		// populate the out buffer
 		if err := osc.Fill(buf); err != nil {
 			log.Printf("error filling up the buffer")
 		}
 
+		//transforms.StereoPan(buf, 0.0)
 		//transforms.Gain(buf, 1)
-		//transforms.StereoPan(buf, rand.Float64())
 
-		comuIO.PortAudioFunc(out, buf)
+		// pass populated buffer to port-audio stream
+		comuIO.PortAudioOut(comuIO.Out, buf)
 	}
 
 }
