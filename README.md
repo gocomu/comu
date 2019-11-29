@@ -12,6 +12,7 @@ The roadmap to v0.1.0 includes:
  - [x] TempoClock
  - [ ] Time functions
  - [ ] Pattern system design
+ - [ ] Timeline
  - [ ] Utilities implementation
     - [ ] embedder
     - [ ] renderer
