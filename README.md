@@ -16,7 +16,6 @@ The roadmap to v0.1.0 includes:
  - [ ] Utilities implementation
     - [ ] embedder
     - [ ] renderer
-    - [ ] recorder
  - [ ] IO wrappers
     - [x] OpenSoundControl
     - [X] Audio
