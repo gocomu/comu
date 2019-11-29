@@ -14,55 +14,58 @@ const (
 	Oto
 )
 
-type AIO struct {
-	Audio   chan *audio.FloatBuffer
-	Trigger chan bool
+type AudioIO struct {
+	BufChan          chan *audio.FloatBuffer
+	numberOfChannels int
+	bufferSize       int
+	stream           *portaudio.Stream
+	//Out              []float32
 }
 
-//func NewOutput(audioOutput out, numberOfChannels, bufferSize int) chan *audio.FloatBuffer {
-func NewOutput(audioOutput out, numberOfChannels, bufferSize int) *AIO {
-	aio := &AIO{
-		Audio: make(chan *audio.FloatBuffer),
+func NewAudioIO(audioOutput out, numberOfChannels, bufferSize int, out []float32) *AudioIO {
+	aio := &AudioIO{
+		BufChan:          make(chan *audio.FloatBuffer),
+		numberOfChannels: numberOfChannels,
+		bufferSize:       bufferSize,
+		//Out:              make([]float32, bufferSize),
 	}
 	switch audioOutput {
 	case PortAudio:
-		go aio.portAudio(numberOfChannels, bufferSize)
+		aio.portAudio(out)
 
 	case Oto:
-		// go aio.oto(numberOfChannels, bufferSize)
+		// go aio.oto()
 	}
 
 	return aio
 }
 
-func (aio *AIO) portAudio(numberOfChannels, bufferSize int) {
+func (aio *AudioIO) portAudio(out []float32) {
 	portaudio.Initialize()
-	defer portaudio.Terminate()
-	out := make([]float32, bufferSize)
-	stream, err := portaudio.OpenDefaultStream(0, numberOfChannels, 44100, len(out), &out)
+	//defer portaudio.Terminate()
+	//out := make([]float32, aio.bufferSize)
+	// stream, err := portaudio.OpenDefaultStream(0, aio.numberOfChannels, 44100, len(aio.Out), &aio.Out)
+	stream, err := portaudio.OpenDefaultStream(0, aio.numberOfChannels, 44100, len(out), &out)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer stream.Close()
+	aio.stream = stream
+	//defer stream.Close()
 
 	if err := stream.Start(); err != nil {
 		log.Fatal(err)
 	}
-
-	for {
-		buf := <-aio.Audio
-		f64ToF32Copy(out, buf.Data)
-		// write to the stream
-		if err := stream.Write(); err != nil {
-			log.Printf("error writing to stream : %v\n", err)
-		}
-	}
 }
 
-// portaudio doesn't support float64 so we need to copy our data over to the
-// destination buffer.
-func f64ToF32Copy(dst []float32, src []float64) {
-	for i := range src {
-		dst[i] = float32(src[i])
+func (aio *AudioIO) PortAudioFunc(out []float32, buf *audio.FloatBuffer) {
+	// portaudio doesn't support float64 so we need to copy our data over to the
+	// destination buffer.
+	for i := range buf.Data {
+		out[i] = float32(buf.Data[i])
+	}
+
+	// write to the stream
+	if err := aio.stream.Write(); err != nil {
+		log.Printf("error writing to stream : %v\n", err)
 	}
 }

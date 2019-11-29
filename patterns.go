@@ -1,16 +1,17 @@
-package pattern
+package comu
 
 import (
+	"math/rand"
+
 	"github.com/go-audio/generator"
-	"github.com/gocomu/comu"
 )
 
 type Pattern struct {
-	clock *comu.TempoClock
+	clock *TempoClock
 	osc   *generator.Osc
 }
 
-func NewPattern(clock *comu.TempoClock, osc *generator.Osc) *Pattern {
+func NewPattern(clock *TempoClock, osc *generator.Osc) *Pattern {
 	return &Pattern{
 		clock: clock,
 		osc:   osc,
@@ -22,12 +23,9 @@ func (p *Pattern) Four2TheFloor(pattern []int) {
 	for {
 		select {
 		case <-p.clock.Beat.C:
-			p.osc.SetFreq(currentNote)
+			//p.osc.SetFreq(currentNote)
+			p.osc.SetFreq(float64(rand.Intn(1500)))
 			currentNote = currentNote + 20.0
-			if p.clock.BeatCounter == 8 {
-				//fmt.Println("tempo change")
-				p.clock.BPMchange <- 120.0
-			}
 			//log.Println(tempo.BarCounter)
 			//tempo.BPMchange <- newTempo
 			//newTempo = newTempo + 10.0

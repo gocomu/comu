@@ -18,7 +18,7 @@ var (
 
 func main() {
 	// start a new osc server and client
-	oscio := cio.NewOSCio("8765", "localhost", "8765")
+	oscio := cio.NewOscIO("8765", "localhost", "8765")
 	// init a handle
 	oscio.Server.Handle("/message/address", func(msg *osc.Message) {
 		osc.PrintMessage(msg)
