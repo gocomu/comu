@@ -4,11 +4,19 @@
 
 # comu
  
-comu (computer music) is an open source music library for creative coding in Go.
+comu _(computer music)_ is an open source music library for creative coding in Go.
+
+### Features
+
+* Real-time audio
+* Multi OS support (linux/mac/win)
+* Command Line helper
+* Stand-alone binary (CLI or GUI)
+* Benefit from existing `Go` libraries and tools
 
 # Getting Started
 
-Bellow are instruction on how to install `comu` and run a few [examples](). 
+Bellow are instruction on how to install `comu` and run a few [examples](https://github.com/gocomu/comu/tree/master/examples). 
 
 
 Full documentaion lives in this repo's [wiki](https://github.com/gocomu/comu/wiki).
@@ -29,19 +37,19 @@ For information on how to use it you can
 
 # Prerequisites
 
-## Go
+### Go
 
 If you don't have `go` installed already, here is the [official documenation](https://golang.org/doc/install).
 
-## PortAudio
+### PortAudio
 
-At the moment the moment the only way to make real time sound is using port-audio. 
+At the moment the moment the only way to make real time sound is PortAudio. 
 
 The download link is [here](http://www.portaudio.com/download.html) and instructions for each platform [here](http://portaudio.com/docs/v19-doxydocs/tutorial_start.html).
 
 # Installation
 
-to clone the library locally along the examples
+to clone the library locally along the examples from a terminal window run:
 
 ``` 
 go get github.com/gocomu/comu
@@ -49,13 +57,17 @@ go get github.com/gocomu/comu
 
 # Use
 
-## Examples
+### Examples
 
 ### comuGen
 
 `cd $GOPATH/src/github.com/gocomu/comu/examples/comuGen`
 
 `go run main.go`
+
+### comuOSC
+
+
 
 
 # roadmap to v0.1.0
@@ -64,17 +76,16 @@ go get github.com/gocomu/comu
  - [ ] Patterns
  - [ ] Timeline
  - [ ] Pan (support for 2..n channels)
- - [ ] Utilities implementation
+ - [ ] Utilities
     - [ ] embedder
     - [ ] renderer
- - [ ] IO wrappers
+ - [x] IO wrappers
     - [x] OpenSoundControl
-    - [ ] Audio
+    - [x] Audio
        - [ ] In
        - [x] Out
     - [ ] Midi
 - [x] README
 - [ ] wiki
-- [ ] Pan implementation (support for 2-4-8-n channels)
 - [ ] CLI
-- [ ] wrap Oto (as alternative to port-audio)
+- [ ] wrap Oto (as alternative to PortAudio)
