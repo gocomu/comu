@@ -30,12 +30,12 @@ const (
 type AudioIO struct {
 	//BufChan          chan *audio.FloatBuffer
 	numberOfChannels int
-	bufferSize       int
+	bufferSize       bufferSize
 	stream           *portaudio.Stream
 	Out              []float32
 }
 
-func NewAudioIO(audioOutput out, numberOfChannels, bufferSize int) *AudioIO {
+func NewAudioIO(audioOutput out, numberOfChannels int, bufferSize bufferSize) *AudioIO {
 	aio := &AudioIO{
 		//BufChan:          make(chan *audio.FloatBuffer),
 		numberOfChannels: numberOfChannels,

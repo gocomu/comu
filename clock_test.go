@@ -5,8 +5,8 @@ import (
 	"time"
 )
 
-func TestCli(t *testing.T) {
-	t.Run("Run SetBannerFunction()", func(t *testing.T) {
+func TestClock(t *testing.T) {
+	t.Run("", func(t *testing.T) {
 		clock := NewClock(100.0)
 		clock.TimeSignature = []int{0, 0}
 		clock.NewBPM(120.0)

@@ -18,7 +18,7 @@ func main() {
 	// arg1 cio.out: PortAudio, Oto
 	// arg2 int: number of channels
 	// arg3 int: buffer size
-	comuIO := cio.NewAudioIO(cio.PortAudio, 2, int(cio.BS2048))
+	comuIO := cio.NewAudioIO(cio.PortAudio, 2, cio.BS2048)
 
 	buf := &audio.FloatBuffer{
 		Data:   make([]float64, cio.BS2048),

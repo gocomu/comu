@@ -1,7 +1,6 @@
 package cio
 
 import (
-	"fmt"
 	"strconv"
 
 	"github.com/hypebeast/go-osc/osc"
@@ -52,9 +51,6 @@ func (o *OscIO) Message(messageAddress string, data ...interface{}) {
 }
 
 func stringToInt(s string) int {
-	i, err := strconv.Atoi(s)
-	if err != nil {
-		fmt.Println(err)
-	}
+	i, _ := strconv.Atoi(s)
 	return i
 }

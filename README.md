@@ -43,7 +43,7 @@ If you don't have `go` installed already, here is the [official documenation](ht
 
 ### PortAudio
 
-At the moment the moment the only way to make real time sound is PortAudio. 
+At the moment the moment the only supported way to make real time sound is PortAudio. 
 
 The download link is [here](http://www.portaudio.com/download.html) and instructions for each platform [here](http://portaudio.com/docs/v19-doxydocs/tutorial_start.html).
 
