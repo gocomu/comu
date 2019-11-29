@@ -49,7 +49,7 @@ The download link is [here](http://www.portaudio.com/download.html) and instruct
 
 # Installation
 
-to clone the library locally along the examples from a terminal window run:
+to clone the library locally along the examples run:
 
 ``` 
 go get github.com/gocomu/comu
