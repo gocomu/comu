@@ -61,25 +61,22 @@ func (t *TempoClock) clock() {
 	t.TimeStarted = time.Now()
 	go func() {
 		for {
+			select {
 			// on each new beat update BeatCounter and BarCounter
-			<-t.Beat.C
-			t.BeatCounter++
-			t.barCounterUpdate()
-		}
-	}()
+			case <-t.Beat.C:
+				t.BeatCounter++
+				t.barCounterUpdate()
 
-	go func() {
-		for {
 			// when BPMchange channels receives a value a new ticker is set
 			// along with new BPM and MStilNetxtBeat
-			newTempo := <-t.BPMchange
-			beatInMS := (60000 / newTempo) * 0.5
-			t.Beat = time.NewTicker(time.Duration(beatInMS) * time.Millisecond)
-			t.BPM = newTempo
-			t.MStilNetxtBeat = beatInMS
+			case newTempo := <-t.BPMchange:
+				beatInMS := (60000 / newTempo) * 0.5
+				t.Beat = time.NewTicker(time.Duration(beatInMS) * time.Millisecond)
+				t.BPM = newTempo
+				t.MStilNetxtBeat = beatInMS
+			}
 		}
 	}()
-
 }
 
 func (t *TempoClock) barCounterUpdate() {
