@@ -1,7 +1,6 @@
 package comu
 
 import (
-	"sync"
 	"time"
 )
 
@@ -31,8 +30,6 @@ type TempoClock struct {
 
 	// MStilNetxtBeat is the time until next beat in milliseconds
 	MStilNetxtBeat float64
-
-	mu *sync.Mutex
 }
 
 // NewClock returns a new TempoClock struct
@@ -44,7 +41,6 @@ func NewClock(initBPM float64) *TempoClock {
 		// default time signature is 4/4
 		TimeSignature:  []int{4, 4},
 		MStilNetxtBeat: (60000 / initBPM) * 0.5,
-		mu:             &sync.Mutex{},
 	}
 	// start the clock
 	tempo.clock()
