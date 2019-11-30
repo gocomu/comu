@@ -14,5 +14,3 @@ require (
 	github.com/mjibson/go-dsp v0.0.0-20180508042940-11479a337f12
 	github.com/xthexder/go-jack v0.0.0-20180616204541-62cc22fa20b6
 )
-
-replace github.com/go-audio/generator => /home/bh90210/gocomu/generator
