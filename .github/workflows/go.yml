@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: PortAudio Install
-      run: apt update && apt install -y portaudio19-dev 
+      run: sudo apt-get update && sudo apt-get install -y portaudio19-dev 
 
     - name: Set up Go 1.13
       uses: actions/setup-go@v1
