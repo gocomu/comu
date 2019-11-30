@@ -1,7 +1,9 @@
 package cio
 
 import (
+	"fmt"
 	"log"
+	"time"
 
 	"github.com/go-audio/audio"
 	"github.com/gordonklaus/portaudio"
@@ -66,6 +68,8 @@ func (aio *AudioIO) portAudio() {
 	if err := stream.Start(); err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println("COMU initializing")
+	time.Sleep(1 * time.Second)
 }
 
 func (aio *AudioIO) PortAudioOut(buf *audio.FloatBuffer) {

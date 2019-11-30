@@ -17,7 +17,7 @@ func main() {
 	// Audio output
 	// arg1 cio.out: PortAudio, Oto
 	// arg2 int: number of channels
-	// arg3 int: buffer size
+	// arg3 cio.bufferSize
 	comuIO := cio.NewAudioIO(cio.PortAudio, 2, cio.BS2048)
 
 	buf := &audio.FloatBuffer{
@@ -26,7 +26,7 @@ func main() {
 	}
 
 	osc := generator.NewOsc(generator.WaveSine, 440.0, buf.Format.SampleRate)
-	osc.Amplitude = 0.5
+	//osc.Amplitude = 0.5
 
 	tempo := comu.NewClock(120.0)
 	sine := comu.NewPattern(tempo, osc)
@@ -53,7 +53,7 @@ func main() {
 		}
 
 		transforms.StereoPan(buf, 0.0)
-		//transforms.Gain(buf, 1)
+		transforms.Gain(buf, 0.5)
 
 		// pass populated buffer to port-audio stream
 		comuIO.PortAudioOut(buf)

@@ -9,17 +9,17 @@ comu _(computer music)_ is an open source music library for creative coding in G
 ### Features
 
 * Real-time audio
-* Multi OS support (linux/mac/win)
+* Multi OS support (Linux/Mac/Win)
 * Command Line helper
-* Stand-alone binary (CLI or GUI)
-* Benefit from existing `Go` libraries and tools
+* Build a stand-alone binary (CLI or GUI)
+* Benefit from existing Go libraries and tools
 
 # Getting Started
 
 Bellow are instruction on how to install `comu` and run a few [examples](https://github.com/gocomu/comu/tree/master/examples). 
 
 
-Full documentaion lives in this repo's [wiki](https://github.com/gocomu/comu/wiki).
+Full documentaion exists in this repo's [wiki](https://github.com/gocomu/comu/wiki).
 
 ## CLI
 
@@ -47,6 +47,14 @@ At the moment the moment the only supported way to make real time sound is PortA
 
 The download link is [here](http://www.portaudio.com/download.html) and instructions for each platform [here](http://portaudio.com/docs/v19-doxydocs/tutorial_start.html).
 
+#### Ubuntu Package
+
+`apt install portaudio19-dev`
+
+#### Homebrew 
+
+`brew install portaudio`
+
 # Installation
 
 to clone the library locally along the examples run:
@@ -68,9 +76,7 @@ go get github.com/gocomu/comu
 ### comuOSC
 
 
-
-
-# roadmap to v0.1.0
+# Roadmap to v0.1.0
  - [x] TempoClock
  - [ ] Time functions
  - [ ] Patterns
