@@ -12,44 +12,61 @@ import (
 type bufferSize int
 
 const (
+	// BS64 bufferSize
 	BS64 bufferSize = 64 << iota
+	// BS128 bufferSize
 	BS128
+	// BS256 bufferSize
 	BS256
+	// BS512 bufferSize
 	BS512
+	// BS1024 bufferSize
 	BS1024
+	// BS2048 bufferSize
 	BS2048
+	// BS4096 bufferSize
 	BS4096
+	// BS8192 bufferSize
 	BS8192
 )
 
 type out int
 
 const (
+	// PortAudio out
 	PortAudio = out(iota)
+	// Oto out
 	Oto
 )
 
+// AudioIO holds audio input/output information
 type AudioIO struct {
 	//BufChan          chan *audio.FloatBuffer
-	numberOfChannels int
-	bufferSize       bufferSize
-	stream           *portaudio.Stream
-	Out              []float32
+	numChan    int
+	bufferSize bufferSize
+	stream     *portaudio.Stream
+	Out        []float32
 }
 
-func NewAudioIO(audioOutput out, numberOfChannels int, bufferSize bufferSize) *AudioIO {
+// NewAudioIO starts sound output stream
+func NewAudioIO(audioOutput out, numberOfChannels int, bs bufferSize) *AudioIO {
+	fmt.Println(`
+	COMU initializing
+	`)
+
 	aio := &AudioIO{
 		//BufChan:          make(chan *audio.FloatBuffer),
-		numberOfChannels: numberOfChannels,
-		bufferSize:       bufferSize,
-		Out:              make([]float32, bufferSize),
+		numChan:    numberOfChannels,
+		bufferSize: bs,
+		Out:        make([]float32, bs),
 	}
+
 	switch audioOutput {
 	case PortAudio:
 		aio.portAudio()
 
 	case Oto:
-		// go aio.oto()
+		// aio.oto()
 	}
 
 	return aio
@@ -58,7 +75,7 @@ func NewAudioIO(audioOutput out, numberOfChannels int, bufferSize bufferSize) *A
 func (aio *AudioIO) portAudio() {
 	portaudio.Initialize()
 	//defer portaudio.Terminate()
-	stream, err := portaudio.OpenDefaultStream(0, aio.numberOfChannels, 44100, len(aio.Out), &aio.Out)
+	stream, err := portaudio.OpenDefaultStream(0, aio.numChan, 44100, len(aio.Out), &aio.Out)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -68,10 +85,14 @@ func (aio *AudioIO) portAudio() {
 	if err := stream.Start(); err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("COMU initializing")
+
 	time.Sleep(1 * time.Second)
+	fmt.Println(`
+	COMU started
+	`)
 }
 
+// PortAudioOut takes a buffer and writes it to PortAudio's stream
 func (aio *AudioIO) PortAudioOut(buf *audio.FloatBuffer) {
 	// portaudio doesn't support float64 so we need to copy our data over to the
 	// destination buffer.

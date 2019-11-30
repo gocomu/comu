@@ -11,7 +11,7 @@ comu _(computer music)_ is an open source music library for creative coding in G
 * Real-time audio
 * Multi OS support (Linux/Mac/Win)
 * Command Line helper
-* Build a stand-alone binary (CLI or GUI)
+* Build a stand-alone application (CLI or GUI)
 * Benefit from existing Go libraries and tools
 
 # Getting Started

@@ -3,17 +3,10 @@
 package main
 
 import (
-	"flag"
 	"time"
 
 	"github.com/gocomu/comu/cio"
 	"github.com/hypebeast/go-osc/osc"
-)
-
-var (
-	sampleRate      = flag.Int("samplerate", 44100, "sample rate")
-	channelNum      = flag.Int("channelnum", 2, "number of channel")
-	bitDepthInBytes = flag.Int("bitdepthinbytes", 2, "bit depth in bytes")
 )
 
 func main() {
