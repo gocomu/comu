@@ -39,7 +39,7 @@ For information on how to use it you can
 
 ### Go
 
-If you don't have `go` installed already, here is the [official documenation](https://golang.org/doc/install).
+If you don't have Go installed already, here is the [official documenation](https://golang.org/doc/install).
 
 ### PortAudio
 
