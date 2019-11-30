@@ -5,6 +5,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/go-audio/audio"
 	"github.com/go-audio/generator"
@@ -46,14 +47,47 @@ func main() {
 		}
 	}()
 
+	// make two channels two for communication with oscillator's goroutine
+	panwait := make(chan float64)
+	ampwait := make(chan float64)
+
+	// init two goroutines that will increment "smoothly" (time operation)
+	go func() {
+		for {
+			time.Sleep(1 * time.Second)
+			panwait <- 0.0
+
+			time.Sleep(1 * time.Second)
+			panwait <- 1.0
+		}
+	}()
+	go func() {
+		for i := 0.0; i < 1.0; i = i + 0.01 {
+			time.Sleep(200 * time.Millisecond)
+			ampwait <- i
+			fmt.Println("volume change ", i)
+		}
+	}()
+
+	// variables to hold channels new sent values
+	var pan float64
+	var amp float64
+
 	for {
 		// populate the out buffer
 		if err := osc.Fill(buf); err != nil {
 			log.Printf("error filling up the buffer")
 		}
 
-		transforms.StereoPan(buf, 0.0)
-		transforms.Gain(buf, 0.5)
+		// non-blocking
+		select {
+		case pan = <-panwait:
+		case amp = <-ampwait:
+		default:
+		}
+
+		transforms.Gain(buf, amp)
+		transforms.StereoPan(buf, pan)
 
 		// pass populated buffer to port-audio stream
 		comuIO.PortAudioOut(buf)
