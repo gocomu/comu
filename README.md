@@ -21,7 +21,7 @@ Bellow are instruction on how to install `comu` and run a few [examples](https:/
 
 Full documentaion exists in this repo's [wiki](https://github.com/gocomu/comu/wiki).
 
-## CLI
+## Command Line helper
 
 To get started faster you can use [`gocomu`](https://github.com/gocomu/cli), a command line interface helper for `comu`.
 
