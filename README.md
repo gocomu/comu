@@ -21,20 +21,6 @@ Bellow are instruction on how to install `comu` and run a few [examples](https:/
 
 Full documentaion exists in this repo's [wiki](https://github.com/gocomu/comu/wiki).
 
-## Command Line helper
-
-To get started faster you can use [`gocomu`](https://github.com/gocomu/cli), a command line interface designed to make working with `comu` a much faster experience. Especially recommended to newcomers in go or programming in general.
-
-Install `gocomu` by running 
-```
-go get github.com/gocomu/cli/cmd/gocomu
-```
-
-For information on how to use it you can 
-
-1. read `gocomu`'s [documentation](https://github.com/gocomu/cli/blob/master/README.md) online
-2. or run `gocomu -help`
-
 # Prerequisites
 
 ### Go
@@ -54,6 +40,21 @@ The download link is [here](http://www.portaudio.com/download.html) and instruct
 #### Homebrew 
 
 `brew install portaudio`
+
+## Command Line helper
+
+To get started faster you can use [`gocomu`](https://github.com/gocomu/cli), a command line interface designed to make working with `comu` a much faster experience. Especially recommended to newcomers in go or programming in general.
+
+Install `gocomu` by running 
+```
+go get github.com/gocomu/cli/cmd/gocomu
+```
+
+For information on how to use it you can 
+
+1. read `gocomu`'s [documentation](https://github.com/gocomu/cli/blob/master/README.md) online
+2. or run `gocomu -help`
+
 
 # Installation
 
