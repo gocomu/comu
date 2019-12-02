@@ -23,9 +23,9 @@ Full documentaion exists in this repo's [wiki](https://github.com/gocomu/comu/wi
 
 ## Command Line helper
 
-To get started faster you can use [`gocomu`](https://github.com/gocomu/cli), a command line interface helper for `comu`.
+To get started faster you can use [`gocomu`](https://github.com/gocomu/cli), a command line interface designed to make working with `comu` a much faster experience. Especially recommended to newcomers in go or programming in general.
 
-To install `gocomu` run 
+Install `gocomu` by running 
 ```
 go get github.com/gocomu/cli/cmd/gocomu
 ```
