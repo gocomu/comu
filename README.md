@@ -43,7 +43,7 @@ The download link is [here](http://www.portaudio.com/download.html) and instruct
 
 ## Command Line helper
 
-To get started you can use [`gocomu`](https://github.com/gocomu/cli), a command line interface designed to make working with `comu` a much faster experience. Especially recommended to newcomers.
+To get started faster you can use [`gocomu`](https://github.com/gocomu/cli), a command line interface designed to make working with `comu` a simpler experience. Especially recommended to newcomers.
 
 Install `gocomu` by running 
 ```
