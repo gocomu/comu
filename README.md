@@ -94,5 +94,5 @@ go get github.com/gocomu/comu
     - [ ] Midi
 - [x] README
 - [ ] wiki
-- [ ] CLI
+- [x] CLI
 - [ ] wrap Oto (as alternative to PortAudio)
