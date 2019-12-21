@@ -86,6 +86,7 @@ go get github.com/gocomu/comu
  - [ ] Utilities
     - [ ] embedder
     - [ ] renderer
+    - [ ] recorder
  - [x] IO wrappers
     - [x] OpenSoundControl
     - [x] Audio
