@@ -96,4 +96,4 @@ go get github.com/gocomu/comu
 - [x] README
 - [ ] wiki
 - [x] CLI
-- [ ] wrap Oto (as alternative to PortAudio)
+- [ ] replace PortAudio with customised Oto
